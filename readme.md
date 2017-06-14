@@ -1,4 +1,4 @@
-![](https://javascript30.com/images/JS3-social-share.png)
+
 
 # JavaScript30
 
@@ -30,5 +30,3 @@ Feel free to submit a PR adding a link to your own recaps, guides or reviews!
 These are meant to be 1:1 copies of what is done in the video. If you found a better / different way to do things, great, but I will be keeping them the same as the videos.
 
 The starter files + solutions will be updated if/when the videos are updated.
-
-Thanks!
