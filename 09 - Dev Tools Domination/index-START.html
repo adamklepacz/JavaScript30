@@ -18,29 +18,62 @@
     }
 
     // Regular
+		console.log('Regular consol.log');
 
     // Interpolated
-
+		let str = `VARIABLE`;
+		console.log('Hello I am a %s string', str);
+		
     // Styled
-
+		console.log('%c I am some great TEXT', 'font-size: 20px; background: red;');
+		
     // warning!
-
+		console.warn('HEY MAN, WATCH OUT!');
+		
     // Error :|
-
+		console.error('Oh no, smth went wrong! Gary move out!');
+		
     // Info
-
+		console.info('Distanse from my city to Dubai is 6137km');
+		
     // Testing
-
+		const p = document.querySelector('p');
+		console.assert(p.classList.contains('ouch'), 'Taht is wrong!');
+		
     // clearing
-
+		// console.clear();
+		
     // Viewing DOM Elements
-
+		console.log(p);
+		console.dir(p);
+		
     // Grouping together
-
+		dogs.forEach(dog => {
+			console.groupCollapsed(`${dog.name}`);
+			console.log(`This is ${dog.name}`);
+			console.log(`${dog.name} is ${dog.age} old years old.`);
+			console.log(`${dog.name} is ${dog.age} dog years old`);
+			console.groupEnd(`${dog.name}`);
+		});
+		
     // counting
+		console.count('word');
+		console.count('word');
+		console.count('word');
+		console.count('word');
+		console.count('word');
 
     // timing
-
+		console.time('fetching data time');
+		fetch('https://api.github.com/users/wesbos')
+			.then(data => data.json())
+			.then(data => {
+			console.timeEnd('fetching data time');
+			console.log(data);
+		});
+		
+		// table
+		console.table(dogs);
   </script>
 </body>
 </html>
