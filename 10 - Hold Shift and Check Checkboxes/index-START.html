@@ -99,32 +99,50 @@
   </div>
 
 <script>
-	const checkboxes = document.querySelectorAll('.inbox input[type="checkbox"]');
-	console.log(checkboxes);
+	const checkboxes = document.querySelectorAll('.item input[type="checkbox"]');
+	let lastChecked; 
 	
-	let lastChecked;
-	 
-	function handleCheck (e) {
-		// check if shift key is down
-		// and checki if they checking it 
+	function checkHandle (e) {
+		// check if they had shift key down
+		// and are they checking it now
 		let inBetween = false;
+		let allBelow = false;
+		
 		if (e.shiftKey && this.checked) {
-			// go ahead and loop over single checkbox
+			// for every checkbox do what we want
 			checkboxes.forEach(checkbox => {
 				console.log(checkbox);
 				if (checkbox === this || checkbox === lastChecked) {
+					console.log('change flag');
 					inBetween = !inBetween;
 				}
 				
 				if (inBetween) {
 					checkbox.checked = true;
 				}
-			});
+			})
+		}
+		
+		// check if they unchecking it using shiftkey
+		if (e.shiftKey && this.checked === false) {
+			console.log('Odznacz wszystko');
+			checkboxes.forEach(checkbox => {
+				if (checkbox === this) {
+					lastChecked = undefined;
+					// change flag for all below
+					allBelow = !allBelow;
+				}
+				
+				if (allBelow) {
+					checkbox.checked = false;
+				}
+			})
 		}
 		lastChecked = this;
-	}	
+	}
 	
-	checkboxes.forEach(checkbox => checkbox.addEventListener('click', handleCheck));
+	
+	checkboxes.forEach(checkbox => checkbox.addEventListener('click',checkHandle));
 </script>
 </body>
 </html>
