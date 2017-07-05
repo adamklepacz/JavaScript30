@@ -99,6 +99,47 @@
   </div>
 
 <script>
+	(function () {
+		const checkboxes = document.querySelectorAll('.inbox input[type="checkbox"]');
+		let lastChecked;
+
+		function checkHandle (e) {
+			let inBetween = false;
+			let allBelow = false;
+			// check if checkbox is checked and if theye have shiftkey down
+			if (e.shiftKey && this.checked) {
+				checkboxes.forEach(checkbox => {
+					if(checkbox === this || checkbox === lastChecked)	{
+						inBetween = !inBetween;
+					}	
+					if (inBetween) {
+						checkbox.checked = true;
+					}
+				});
+			}
+
+			// check if they have shiftkey down once again and uncheck all inputs
+			// below 
+			if (e.shiftKey && this.checked === false) {
+				checkboxes.forEach(checkbox => {
+					if (checkbox === this) {
+						// change flag for all below
+						allBelow = !allBelow;
+						lastChecked = undefined;
+					}
+					if (allBelow) {
+						checkbox.checked = false;
+					}
+				})	
+			}
+			lastChecked = this;
+		}
+		
+		checkboxes.forEach(checkbox => checkbox.addEventListener('click', checkHandle));
+	}());
+	
+  
+	
 </script>
 </body>
 </html>
