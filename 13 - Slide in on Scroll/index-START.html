@@ -66,24 +66,28 @@
 			// get images
 			const sliderImages = document.querySelectorAll('.slide-in');
 			
-			/* 
-			* check position of image, window scroll and add or remove 
-			* class 'active' to current image
+			/*
+			* check position of window and image, compare and
+			* set class active to image which user is curently scroling
+			* trough
 			*/
 			function checkSlide () {
 				sliderImages.forEach(sliderImage => {
+					// half way trough the image
 					const slideInAt = (window.scrollY + window.innerHeight) - sliderImage.height / 2;
-					const imageBottom = sliderImage.offsetTop + sliderImage.height; 
+					// bottom position of the image
+					const imageBottom = sliderImage.offsetTop + sliderImage.height;
+					// is image half shown 
 					const isHalfShown = slideInAt > sliderImage.offsetTop;
+					// is image not scrolled past
 					const isNotScrolledPast = window.scrollY < imageBottom;
-					// if half of the image is shown and image is not scrolled past
-					// fade in or if image is scrolled past fade out
+					
 					if (isHalfShown && isNotScrolledPast) {
 						sliderImage.classList.add('active');
 					} else {
 						sliderImage.classList.remove('active');
 					}
-				});
+				});	
 			}
 			window.addEventListener('scroll', debounce(checkSlide));
 		})();
