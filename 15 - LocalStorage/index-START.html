@@ -23,13 +23,96 @@
       <input type="text" name="item" placeholder="Item Name" required>
       <input type="submit" value="+ Add Item">
     </form>
+    <form class="handle-items">
+    	<input type="button" name="clearAll" value="- Clear all">
+    	<input type="button" name="uncheckAll" value="Uncheck all">
+    	<input type="button" name="checkAll" value="Check all">
+    </form>
   </div>
 
 <script>
-  const addItems = document.querySelector('.add-items');
-  const itemsList = document.querySelector('.plates');
-  const items = [];
+	(function () {
+		const addItems = document.querySelector('.add-items');
+		const itemsList = document.querySelector('.plates');
+		const items = JSON.parse(localStorage.getItem('items')) || [];
+		const clearAll = document.querySelector('[name=clearAll]');
+		const uncheckAll = document.querySelector('[name=uncheckAll]');
+		const checkAll = document.querySelector('[name=checkAll]');
 
+
+		function addItem (e) {
+			e.preventDefault();
+			const text = (this.querySelector('[name=item]')).value;
+			const item = {
+				text: text,
+				done: false
+			}
+
+			items.push(item);
+			populateList(items, itemsList);
+			localStorage.setItem('items', JSON.stringify(items));
+			this.reset();
+		}
+
+		function clearItems () {
+			// clean localStorage
+			localStorage.clear();
+			// clean items array
+			items.splice(0, items.length);
+			populateList(items, itemsList);
+			addItems.reset();
+		}
+
+		function checkAllItems () {
+			// set done property to true
+			// done is responsible for 'checked' or unchecked value 
+			// of checkbox in populateList function 
+			items.forEach(item => {
+				item.done = true;
+			});
+			populateList(items, itemsList);
+			localStorage.setItem('items', JSON.stringify(items));
+		}
+
+		function uncheckAllItems () {
+			// set done property to false
+			// done is responsible for 'checked' or unchecked value 
+			// of checkbox in populateList function
+			items.forEach(item => {
+				item.done = false;
+			});
+			populateList(items, itemsList);
+			localStorage.setItem('items', JSON.stringify(items));
+		}
+
+		function populateList (items = [], itemsList) {
+			itemsList.innerHTML = items.map((item, i) => {
+				return `
+					<li>
+						<input type="checkbox" data-index=${i} id="item${i}" ${item.done ? 'checked' : ''} />
+						<label for="item${i}">${item.text}</label>
+					</li>
+				`
+			}).join('');
+		}
+
+		function toggleDone (e) {
+			if (!e.target.matches('input')) return; // skip this unless
+			const el = e.target;
+			const index = el.dataset.index;
+			items[index].done = !items[index].done;
+			localStorage.setItem('items', JSON.stringify(items));
+			populateList(items, itemsList);
+		}
+
+
+		clearAll.addEventListener('click', clearItems);
+		addItems.addEventListener('submit', addItem);
+		itemsList.addEventListener('click', toggleDone);
+		checkAll.addEventListener('click', checkAllItems);
+		uncheckAll.addEventListener('click', uncheckAllItems);
+		populateList(items, itemsList);
+	})();
 </script>
 
 
