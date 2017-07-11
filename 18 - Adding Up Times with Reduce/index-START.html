@@ -182,6 +182,19 @@
     </li>
   </ul>
 <script>
+	const timeNodes = Array.from(document.querySelectorAll('[data-time]'));
+
+	const seconds = timeNodes
+		.map(function (node) {
+			return node.dataset.time;
+		})
+		.map(function (timeCode) {
+			const [mins, secs] = timeCode.split(':').map(parseFloat);
+			return (mins * 60) + secs
+		}).reduce() // need to end it up right here 
+	console.log(seconds);
+	
+
 </script>
 </body>
 </html>
