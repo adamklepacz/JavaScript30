@@ -7,6 +7,27 @@
 </head>
 <body>
 <script>
+	(function () {
+		/**
+		* checking if sequence of pressed keys is equal to 
+		* secretCode and do some stuff
+		*/
+		function keySequence () {
+			const pressed = [];
+			const secretCode = 'klekot';
+	
+			window.addEventListener('keyup', (e) => {
+				pressed.push(e.key);
+				pressed.splice(-secretCode.length - 1, pressed.length - secretCode.length);
+			
+				// do some stuff
+				if (pressed.join('').includes(secretCode)) {
+					console.log('Ding ding, sequence is correct!');
+				}
+			});
+		}
+		keySequence();
+	})();
 </script>
 </body>
 </html>
