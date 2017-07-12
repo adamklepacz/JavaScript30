@@ -177,7 +177,7 @@
     <li data-time="1:56">
       Video 57
     </li>
-    <li data-time="4:04">
+    <li data-time="4:09">
       Video 58
     </li>
   </ul>
@@ -191,10 +191,19 @@
 		.map(function (timeCode) {
 			const [mins, secs] = timeCode.split(':').map(parseFloat);
 			return (mins * 60) + secs
-		}).reduce() // need to end it up right here 
-	console.log(seconds);
+		}).reduce(function (previousValue, currentValue, i) {
+			return previousValue + currentValue;
+		});
 	
-
+	let secondsLeft = seconds; 
+	const hours = Math.floor(secondsLeft / 3600);
+	secondsLeft = secondsLeft % 3600;
+	
+	const mins = Math.floor(secondsLeft / 60);
+	secondsLeft = secondsLeft % 60;
+	
+	// display total hours, mins and seconds 
+	console.log(hours, mins, secondsLeft);
 </script>
 </body>
 </html>
