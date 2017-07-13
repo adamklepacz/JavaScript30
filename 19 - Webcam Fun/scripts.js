@@ -3,6 +3,7 @@ const canvas = document.querySelector('.photo');
 const ctx = canvas.getContext('2d');
 const strip = document.querySelector('.strip');
 const snap = document.querySelector('.snap');
+const photoBtn = document.querySelector('.photo-btn');
 
 function getVideo () {
 	navigator.mediaDevices.getUserMedia({ video: true, audio: false})
@@ -26,6 +27,24 @@ function paintToCanvas () {
 	}, 16);
 }
 
+function takePhoto () {
+	// play snap sound
+	snap.currentTime = 0;
+	snap.play();
+	
+	// take data out of the canvas
+	const data = canvas.toDataURL('image/jpeg');
+	const link = document.createElement('a');
+	link.href = data;
+	link.setAttribute('download', 'handsome');
+	link.innerHTML = `<img src="${data}" alt="Handsome man"/>`;
+	strip.insertBefore(link, strip.firstChild);
+}
+
+
+
 getVideo();
 video.addEventListener('canplay', paintToCanvas);
+photoBtn.addEventListener('click', takePhoto);
+
 
