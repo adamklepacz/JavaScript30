@@ -5,7 +5,7 @@
   <title>Speech Detection</title>
 </head>
 <body>
-
+	<h2>Powiedz, kogo mam Ci pokazać?</h2>
   <div class="words" contenteditable>
   </div>
 
@@ -20,17 +20,89 @@
 	const words = document.querySelector('.words');
 	words.appendChild(p);
 	
+	
+	// object for later usage
+	const people = {
+		Magda: {
+			0: 'Magda',
+			1: 'Magde',
+			2: 'Magdę',
+			3: 'Matuszewska',
+			4: 'Matuszewską'
+		},
+		Adam: {
+			0: 'Adam',
+			1: 'Adama',
+			2: 'Adasia',
+			3: 'Klepacz',
+			4: 'Klepacza'
+		}
+	};
+
 	recognition.addEventListener('result', e => {
 		const transcript = Array.from(e.results)
 			.map(result => result[0])
 			.map(result => result.transcript)
 			.join('');
-		console.log(transcript);
 		
+		//console.log(e.results[0][0].confidence);
 		p.textContent = transcript;
 		if(e.results[0].isFinal) {
 			p = document.createElement('p');
 			words.appendChild(p);
+		}
+				
+		let conf; // level of confidence
+		const items = []; // items array to push current words from transcript
+		
+		if(transcript.includes('Magda') | transcript.includes('Magdę') | transcript.includes('Panią domu')) {
+			items.push(transcript);
+			conf = e.results[0][0].confidence;
+			if(items.length === 1 && conf >= 0.90) {
+				window.open("https://www.facebook.com/p1.adams");
+				console.log('Pokaz ADAM');
+			}
+		}
+			
+		if(transcript.includes('Adam') | transcript.includes('Klepacz') | transcript.includes('Adama')) {
+			items.push(transcript);
+			conf = e.results[0][0].confidence;
+			if(items.length === 1 && conf >= 0.90) {
+				window.open("https://www.facebook.com/p1.adams");
+				console.log('Pokaz ADAM');
+			}
+		}
+		
+		if(transcript.includes('pogoda') | transcript.includes('pogodę') | transcript.includes('pogode') | transcript.includes('wrocławiu') | transcript.includes('wrocław')) {
+			items.push(transcript);
+			conf = e.results[0][0].confidence;
+			if(items.length === 1 && conf >=0.90){
+				window.open("https://www.google.pl/#q=pogoda+wroc%C5%82aw")
+			}
+		}
+		
+		if(transcript.includes('dupa') | transcript.includes('dupę')) {
+			items.push(transcript);
+			conf = e.results[0][0].confidence;
+			if(items.length === 1 && conf >= 0.90){
+				window.open("http://www.kuprawdzie.pl/wp-content/uploads/2015/12/Psia-dupa1-e1453502480478.jpg");
+			}
+		}
+		
+		if(transcript.includes('Norberta') | transcript.includes('Wojtasik') | transcript.includes('Norbert')) {
+			items.push(transcript);
+			conf = e.results[0][0].confidence;
+			if(items.length === 1 && conf >= 0.90) {
+				window.open('https://www.facebook.com/norbert.wojtasik.5');
+			}
+		}
+		
+		if(transcript.includes('Przez twe oczy')) {
+			items.push(transcript);
+			conf = e.results[0][0].confidence;
+			if(items.length === 1 && conf >= 0.90) {
+				window.open('https://www.facebook.com/norbert.wojtasik.5');
+			}
 		}
 	});
 	
@@ -69,6 +141,10 @@
     p {
       margin: 0 0 3rem;
     }
+		
+		h2 {
+			text-align: center;
+		}
 
     .words:before {
       content: '';
