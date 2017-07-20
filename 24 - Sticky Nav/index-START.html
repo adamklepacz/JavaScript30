@@ -54,7 +54,24 @@
   </div>
 
 <script>
-
+	const nav = document.querySelector('#main');
+	let topOfNav = nav.offsetTop;
+	
+	// fix nav when they scroll down
+	function fixNav() {
+		console.log('we\'re inside');
+		if(window.scrollY >= topOfNav) {
+			// add nav heigths as a padding top property to body,
+			// to avoid content jump effect
+			document.body.style.paddingTop = nav.offsetHeight + 'px';
+			document.body.classList.add('fixed-nav');
+		} else {
+			document.body.classList.remove('fixed-nav');
+			document.body.style.paddingTop = 0;
+		}
+	}
+	
+	window.addEventListener('scroll', fixNav);
 </script>
 
 </body>
