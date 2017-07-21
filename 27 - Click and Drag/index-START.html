@@ -35,6 +35,40 @@
   </div>
 
 <script>
+	// get slider element
+	const slider = document.querySelector('.items');
+	let isDown = false; // flag is mousedown or is up
+	let startX; // stores value of pixels at X axis
+	let scrollLeft; // stores value of pixels at x axis of slider element
+	
+	// when mouse is down...
+	slider.addEventListener('mousedown', (e) => {
+		isDown = true; // ... set flag to true
+		slider.classList.add('active'); // ...add 'active' class to slider
+		startX = e.pageX - slider.offsetLeft; //...assign x axis value 
+		scrollLeft = slider.scrollLeft; //...assign x axis of scroll value of slider element
+	});
+	
+	// when mouse leaves slider element...
+	slider.addEventListener('mouseleave', () => {
+		isDown = false; //...set isDown flag to false
+		slider.classList.remove('active'); //... remove 'active' class from slider element
+	});
+	
+	// when mouse is up...
+	slider.addEventListener('mouseup', () => {
+		isDown = false; //...set flag to false
+		slider.classList.remove('active'); //...remove 'active' calss from slider element
+	});
+	
+	// when mouse is moving over the slider element...
+	slider.addEventListener('mousemove', (e) => {
+		if(!isDown) return; //...stop fn from running if mouse is not clicked down
+		e.preventDefault();
+		const x = e.pageX - slider.offsetLeft; // assign current x axis point
+		const walk = (x - startX) * 2; // subtract walk, difference between point where mouse was clicked and current position of mouse
+		slider.scrollLeft = scrollLeft - walk; // set walk as scrollLeft value to slider element
+	});
 </script>
 
   </body>
