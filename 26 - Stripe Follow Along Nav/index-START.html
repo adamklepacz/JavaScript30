@@ -213,16 +213,27 @@
 </style>
 
 <script>
+	// get all the elements
 	const background = document.querySelector('.dropdownBackground');
 	const nav = document.querySelector('.top');
 	const triggers = document.querySelectorAll('.cool > li');
 
+	//function running when mouseenter
 	function handleEnter() {
+		// add class to <li> element
 		this.classList.add('trigger-enter');
-		setTimeout(() => this.classList.add('trigger-enter-active'), 150);
+		// after 150ms add next class to <li> element 
+		// to get transition effect
+		setTimeout(() => {
+			if(this.classList.contains('trigger-enter')) {
+				this.classList.add('trigger-enter-active');
+			}
+		}, 150);
 		background.classList.add('open');
 		
+		// get dropdown div
 		const dropdown = this.querySelector('.dropdown');
+		// get dropdown and nav coords
 		const dropdownCoords = dropdown.getBoundingClientRect();
 		const navCoords = nav.getBoundingClientRect();
 		
@@ -233,13 +244,18 @@
 			left: dropdownCoords.left - navCoords.left
 		};
 		
+		// set style properties to dropdown div - white one
 		background.style.setProperty('height', `${coords.height}px`);
 		background.style.setProperty('width', `${coords.width}px`);
 		background.style.setProperty('transform', `translate(${coords.left}px, ${coords.top}px)`);
 	}
 	
+	//function running when mouseleave
 	function handleLeave() {
+		// remove classes from <li> element
 		this.classList.remove('trigger-enter', 'trigger-enter-active');
+		// remove class from dropdown div - white one
+		background.classList.remove('open');
 	}
 	
 	triggers.forEach(trigger => trigger.addEventListener('mouseenter', handleEnter));
