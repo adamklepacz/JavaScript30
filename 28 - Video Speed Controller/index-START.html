@@ -8,13 +8,33 @@
 <body>
 
   <div class="wrapper">
-    <video class="flex" width="765" height="430" src="https://www.dropbox.com/s/nf6jfkwck1glsyo/12%20-%20flex-wrapping-and-columns.mp4?dl=1" loop controls></video>
+    <video class="flex" width="765" height="430" src="https://www.dropbox.com/s/ru65wkxjyp0xvqp/How%20to%20Switch%20from%20Employee%20Mindset%20to%20Entrepreneur%20Mindset%20QA001.mp4?dl=1" loop controls></video>
     <div class="speed">
       <div class="speed-bar">1×</div>
     </div>
   </div>
 
 <script>
+	const speed = document.querySelector('.speed');
+	const bar = document.querySelector('.speed-bar');
+	const video = document.querySelector('.flex');
+	
+	function handleMove(e) {
+		const y = e.pageY - this.offsetTop; // y point, when clicking at .speed element
+		const percent = y / this.offsetHeight; // percent value of point where they clicked 
+		const min = 0.4; // minmum range for playbackRate
+		const max = 4; // maximum range for playbacRate
+		const barHeight = Math.round(percent * 100) + '%'; // blue bar heigth in percent - string, for CSS
+		const playbackRate = percent * (max - min) + min; // variable for setting it up to video playbackRate
+		
+		bar.style.height = barHeight;
+		bar.textContent = playbackRate.toFixed(2) + 'x';
+		video.playbackRate = playbackRate;
+	}
+	
+	speed.addEventListener('mousedown', handleMove);
+	
+	
 </script>
 </body>
 </html>
